@@ -1,10 +1,12 @@
 var timeout;
 
+// Initialize Locomotive Scroll for smooth scrolling
 const scroll = new LocomotiveScroll({
   el: document.querySelector("#main"),
   smooth: true,
 });
 
+// First Page Animations with GSAP
 function firstPageAnim() {
   var tl = gsap.timeline();
 
@@ -12,11 +14,11 @@ function firstPageAnim() {
     y: "-10",
     opacity: 0,
     duration: 1.5,
-    ease: Expo.easeInOut,
+    ease: "expo.inOut",
   })
     .to(".boundingelem", {
       y: 0,
-      ease: Expo.easeInOut,
+      ease: "expo.inOut",
       duration: 2,
       delay: -1,
       stagger: 0.2,
@@ -26,73 +28,82 @@ function firstPageAnim() {
       opacity: 0,
       duration: 1.5,
       delay: -1,
-      ease: Expo.easeInOut,
+      ease: "expo.inOut",
     });
 }
 
-function circleChaptaKaro() {
-  // define default scale value
-  var xscale = 1;
-  var yscale = 1;
+// Mini Circle Cursor Effect with Scaling & Movement
+function customCursorEffect() {
+  const cursor = document.querySelector("#minicircle");
+  let xscale = 1,
+    yscale = 1;
+  let xprev = 0,
+    yprev = 0;
 
-  var xprev = 0;
-  var yprev = 0;
-
-  window.addEventListener("mousemove", function (dets) {
+  window.addEventListener("mousemove", (e) => {
     clearTimeout(timeout);
 
-    xscale = gsap.utils.clamp(0.8, 1.2, dets.clientX - xprev);
-    yscale = gsap.utils.clamp(0.8, 1.2, dets.clientY - yprev);
+    let xdiff = e.clientX - xprev;
+    let ydiff = e.clientY - yprev;
 
-    xprev = dets.clientX;
-    yprev = dets.clientY;
+    xscale = gsap.utils.clamp(0.8, 1.2, Math.abs(xdiff) * 0.01);
+    yscale = gsap.utils.clamp(0.8, 1.2, Math.abs(ydiff) * 0.01);
 
-    circleMouseFollower(xscale, yscale);
+    xprev = e.clientX;
+    yprev = e.clientY;
 
-    timeout = setTimeout(function () {
-      document.querySelector(
-        "#minicircle"
-      ).style.transform = `translate(${dets.clientX}px, ${dets.clientY}px) scale(1, 1)`;
+    gsap.to(cursor, {
+      x: e.clientX,
+      y: e.clientY,
+      scaleX: xscale,
+      scaleY: yscale,
+      ease: "power3.out",
+      duration: 0.2,
+    });
+
+    timeout = setTimeout(() => {
+      gsap.to(cursor, {
+        scaleX: 1,
+        scaleY: 1,
+        duration: 0.2,
+      });
     }, 100);
   });
 }
 
-function circleMouseFollower(xscale, yscale) {
-  window.addEventListener("mousemove", function (dets) {
-    document.querySelector(
-      "#minicircle"
-    ).style.transform = `translate(${dets.clientX}px, ${dets.clientY}px) scale(${xscale}, ${yscale})`;
+// Image Hover Effect with Dynamic Rotation
+function imageHoverEffect() {
+  document.querySelectorAll(".elem").forEach((elem) => {
+    let rotate = 0;
+    let diffrot = 0;
+    let img = elem.querySelector("img");
+
+    elem.addEventListener("mouseleave", () => {
+      gsap.to(img, {
+        opacity: 0,
+        ease: "power3.out",
+        duration: 0.5,
+      });
+    });
+
+    elem.addEventListener("mousemove", (e) => {
+      let diff = e.clientY - elem.getBoundingClientRect().top;
+      diffrot = e.clientX - rotate;
+      rotate = e.clientX;
+
+      gsap.to(img, {
+        opacity: 1,
+        ease: "power3.out",
+        top: diff,
+        left: e.clientX,
+        rotate: gsap.utils.clamp(-20, 20, diffrot * 0.5),
+        scale: 1.1, // Slight scale effect for depth
+      });
+    });
   });
 }
 
-circleChaptaKaro();
-circleMouseFollower();
+// Initialize Functions
+customCursorEffect();
+imageHoverEffect();
 firstPageAnim();
-
-// teeno element ko sleect karo, uske baad teeno par ek mousemove lagao, jab mousemove ho to ye pata karo ki mouse kaha par hai, jiska matlab hai mouse ki x and y position pata karo, ab mouse ki x y position ke badle us image ko show karo and us image ko move karo, move karte waqt rotate karo, and jaise jaise mouse tez chale waise waise rotation bhi tez ho jaye
-
-document.querySelectorAll(".elem").forEach(function (elem) {
-  var rotate = 0;
-  var diffrot = 0;
-
-  elem.addEventListener("mouseleave", function (dets) {
-    gsap.to(elem.querySelector("img"), {
-      opacity: 0,
-      ease: Power3,
-      duration: 0.5,
-    });
-  });
-
-  elem.addEventListener("mousemove", function (dets) {
-    var diff = dets.clientY - elem.getBoundingClientRect().top;
-    diffrot = dets.clientX - rotate;
-    rotate = dets.clientX;
-    gsap.to(elem.querySelector("img"), {
-      opacity: 1,
-      ease: Power3,
-      top: diff,
-      left: dets.clientX,
-      rotate: gsap.utils.clamp(-20, 20, diffrot * 0.5),
-    });
-  });
-});

@@ -1,13 +1,15 @@
 * {
     margin: 0;
     padding: 0;
-    font-family: "General Sans";
+    font-family: "General Sans", sans-serif;
     box-sizing: border-box;
+    
 }
 
 html, body {
     width: 100%;
     height: 100%;
+    overflow-x: hidden;
 }
 
 #minicircle {
@@ -40,6 +42,7 @@ html, body {
     width: 100%;
     height: 100vh;
     background-color: black;
+    padding: 20px;
 }
 
 #nav {
@@ -63,7 +66,7 @@ html, body {
 
 #heading h1 {
     margin-left: 30px;
-    opacity: .6;
+    opacity: 0.6;
     line-height: 1;
     font-size: 10vw;
     text-transform: uppercase;
@@ -77,27 +80,27 @@ html, body {
 .blocktext {
     display: flex;
     flex-direction: column;
-    align-items: end;
+    align-items: flex-end;
     width: fit-content;
 }
 
 .blocktext h5 {
     text-transform: uppercase;
     font-size: 15px;
-    text-align: right !important;
+    text-align: right;
 }
 
 #chhotiheadings {
     display: flex;
     flex-direction: column;
-    align-items: end;
+    align-items: flex-end;
     margin-top: 100px;
     padding-right: 50px;
 }
 
 #chhotiheadings h5 {
     text-transform: uppercase;
-    margin-top: .5vw;
+    margin-top: 0.5vw;
     font-size: 1vw;
     text-align: right;
 }
@@ -156,7 +159,7 @@ html, body {
 .elem h1 {
     text-transform: uppercase;
     font-size: 7.6vw;
-    opacity: .7;
+    opacity: 0.7;
 }
 
 .elemlast {
@@ -174,29 +177,29 @@ html, body {
 
 #about {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: 50px;
     color: #fff;
     padding: 30vw 10vw;
-    padding-left: 10vw;
     width: 100%;
     background-color: black;
 }
 
 #textabout {
-    width: 25rem;
+    width: 100%;
+    max-width: 25rem;
 }
 
 #textabout h5 {
     text-transform: uppercase;
-    opacity: .6;
+    opacity: 0.6;
     margin-bottom: 10px;
 }
 
 #textabout p {
     line-height: 1.7;
     margin-bottom: 30px;
-
 }
 
 #about img {
@@ -221,7 +224,7 @@ html, body {
 
 #subscribe h5 {
     text-transform: uppercase;
-    opacity: .6;
+    opacity: 0.6;
 }
 
 #subscribe h3 {
@@ -234,19 +237,17 @@ html, body {
     color: #fff;
     background-color: black;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
     padding: 40px 30px;
 }
 
-#footerleft {
-    display: flex;
-    gap: 20px;
-}
-
+#footerleft,
 #footerright {
     display: flex;
-    gap: 30px;
+    flex-wrap: wrap;
+    gap: 20px;
 }
 
 #footer a {
@@ -255,4 +256,115 @@ html, body {
     font-weight: 500;
     color: #fff;
     text-decoration: none;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 1024px) {
+    #nav {
+        padding: 20px;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #heading h1 {
+        font-size: 12vw;
+        margin-left: 10px;
+    }
+
+    #heading #secondh1 {
+        margin-left: 30px;
+    }
+
+    #herofooter {
+        flex-direction: column;
+        align-items: center;
+        bottom: 10%;
+        gap: 10px;
+    }
+
+    #second {
+        padding-right: 5vw;
+        padding-top: 100px;
+        height: auto;
+    }
+
+    .elem h1 {
+        font-size: 10vw;
+    }
+
+    #about {
+        flex-direction: column;
+        padding: 10vw;
+        text-align: center;
+    }
+
+    #textabout {
+        max-width: 100%;
+    }
+
+    #about img {
+        width: 150px;
+    }
+
+    #subscribe {
+        text-align: center;
+        padding: 20px;
+    }
+
+    #footer {
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    #nav {
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    #heading h1 {
+        font-size: 14vw;
+    }
+
+    #herofooter {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #chhotiheadings {
+        align-items: center;
+        padding-right: 0;
+        text-align: center;
+    }
+
+    #about {
+        padding: 15vw 5vw;
+    }
+
+    #footer {
+        text-align: center;
+        padding: 20px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    #heading h1 {
+        font-size: 16vw;
+    }
+
+    #herofooter {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+
+    #about {
+        padding: 20vw 5vw;
+    }
+
+    #footer {
+        flex-direction: column;
+        gap: 10px;
+    }
 }
